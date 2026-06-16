@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>كرتونة ميني ماركت - Kartona Mini Market</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&display=swap');
+        body { font-family: 'Cairo', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50 text-gray-800 overflow-x-hidden">
+
+    <!-- الهيدر الرئيسي للموقع -->
+    <header class="bg-[#fcd34d] sticky top-0 z-40 shadow-md">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-col md:flex-row items-center justify-between gap-4">
+            
+            <div class="flex items-center space-x-reverse space-x-3 w-full md:w-auto justify-between md:justify-start">
+                <button onclick="openModal('login-modal')" class="bg-[#1e293b] text-white px-4 py-2 rounded-lg font-semibold text-sm hover:bg-slate-700 transition flex items-center gap-2">
+                    <i class="fa-solid fa-user"></i> تسجيل الدخول
+                </button>
+                
+                <div class="flex items-center space-x-reverse space-x-2">
+                    <button onclick="openCartModal()" class="bg-green-700 text-white px-3 py-2 rounded-lg text-xs font-bold hover:bg-green-800 transition hidden sm:block">
+                        تصفح المشتريات 🛒
+                    </button>
+                    <div id="cart-icon" onclick="openCartModal()" class="relative bg-green-600 text-white p-2.5 rounded-full cursor-pointer hover:bg-green-700 transition-all duration-300">
+                        <i class="fa-solid fa-basket-shopping text-lg"></i>
+                        <span id="cart-count" class="absolute -top-1 -left-1 bg-amber-500 text-xs w-5 h-5 rounded-full flex items-center justify-center font-bold">0</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- الشعار الثابت للمحل -->
+            <div class="flex order-first md:order-none justify-center">
+                <img src="https://i.ibb.co/VMDm0gV/1000094311.jpg" alt="شعار كرتونة" class="h-20 md:h-24 object-contain drop-shadow-md">
+            </div>
+
+            <!-- شريط البحث الذكي عن السلع -->
+            <div class="w-full md:w-80 relative">
+                <input type="text" id="search-bar" onkeyup="searchProducts()" placeholder="ابحث عن زيت، سكر، دقيق، مشروبات..." class="w-full pr-10 pl-4 py-2 rounded-lg border-none focus:outline-none focus:ring-2 focus:ring-amber-500 shadow-inner text-sm">
+                <i class="fa-solid fa-magnifying-glass absolute right-3 top-3 text-gray-400 text-sm"></i>
+            </div>
+        </div>
+
+        <!-- روابط التنقل السريع بين الأقسام -->
+        <nav class="bg-white border-t border-amber-200 shadow-sm">
+            <div class="max-w-7xl mx-auto px-4 py-2.5 flex items-center justify-center space-x-reverse space-x-6 md:space-x-8 text-xs md:text-sm font-bold text-gray-700 overflow-x-auto whitespace-nowrap">
+                <a href="#section-essentials" class="text-green-600 hover:text-green-700 transition">المواد الأساسية</a>
+                <a href="#section-legumes" class="hover:text-green-600 transition">القطاني</a>
+                <a href="#section-drinks" class="hover:text-green-600 transition">المشروبات</a>
+                <a href="#section-sweets" class="hover:text-green-600 transition">الحلويات والمقرمشات</a>
+                <button onclick="openModal('about-modal')" class="hover:text-green-600 transition font-bold">من نحن</button>
+                <button onclick="openModal('contact-modal')" class="hover:text-green-600 transition font-bold">تواصل معنا</button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- محتوى المتجر الإلكتروني الشامل -->
+    <main class="max-w-7xl mx-auto px-4 mt-8 mb-16">
+        
+        <!-- ================= قسم المواد الأساسية ================= -->
+        <section id="section-essentials" class="mb-12">
+            <h2 class="text-xl font-black border-r-4 border-amber-500 pr-3 mb-6 text-slate-800 flex items-center gap-2">
+                📦 المواد الغذائية الأساسية
+            </h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+                
+                <!-- زيت المائدة -->
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex flex-col justify-between text-center product-card" data-id="1" data-name="زيت المائدة لوسيور 5 لتر" data-price="75.00">
+                    <img src="https://images.unsplash.com/photo-1474979266404-7eaacbcd87c5?auto=format&fit=crop&w=400&q=80" alt="زيت المائدة لوسيور" class="w-full h-36 md:h-40 object-cover rounded-lg mb-3">
+                    <div>
+                        <h4 class="product-title text-xs md:text-sm font-bold text-gray-800 h-10 overflow-hidden">زيت المائدة لوسيور 5 لتر</h4>
+                        <p class="text-green-700 font-extrabold text-base mt-2 bg-green-50 py-1 rounded border border-green-200"><span class="price-val">75.00</span> درهم</p>
+                    </div>
+                    <button onclick="addToCart(this)" class="mt-3 w-full bg-green-600 text-white py-2 rounded-lg text-xs font-bold flex items-center justify-center gap-1 hover:bg-green-700 transition">
+                        <i class="fa-solid fa-cart-plus"></i> <span>أضف إلى السلة</span>
+                    </button>
+                </div>
+
+                <!-- زيت الزيتون -->
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex flex-col justify-between text-center product-card" data-id="2" data-name="زيت زيتون بكر ممتاز 1 لتر" data-price="85.00">
+                    <img src="https://images.unsplash.com/photo-1471193945509-9ad0617afabf?auto=format&fit=crop&w=400&q=80" alt="زيت زيتون حقيقي" class="w-full h-36 md:h-40 object-cover rounded-lg mb-3">
+                    <div>
+                        <h4 class="product-title text-xs md:text-sm font-bold text-gray-800 h-10 overflow-hidden">زيت زيتون بكر ممتاز 1 لتر</h4>
+                        <p class="text-green-700 font-extrabold text-base mt-2 bg-green-50 py-1 rounded border border-green-200"><span class="price-val">85.00</span> درهم</p>
+                    </div>
+                    <button onclick="addToCart(this)" class="mt-3 w-full bg-green-600 text-white py-2 rounded-lg text-xs font-bold flex items-center justify-center gap-1 hover:bg-green-700 transition">
+                        <i class="fa-solid fa-cart-plus"></i> <span>أضف إلى السلة</span>
+                    </button>
+                </div>
+
+                <!-- سكر قالب -->
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex flex-col justify-between text-center product-card" data-id="3" data-name="سكر قالب النمر الكلاسيكي 2 كيلو" data-price="13.00">
+                    <img src="https://images.unsplash.com/photo-1581798459219-318e76aecc7b?auto=format&fit=crop&w=400&q=80" alt="سكر أبيض" class="w-full h-36 md:h-40 object-cover rounded-lg mb-3">
+                    <div>
+                        <h4 class="product-title text-xs md:text-sm font-bold text-gray-800 h-10 overflow-hidden">سكر قالب النمر الكلاسيكي 2 كيلو</h4>
+                        <p class="text-green-700 font-extrabold text-base mt-2 bg-green-50 py-1 rounded border border-green-200"><span class="price-val">13.00</span> درهم</p>
+                    </div>
+                    <button onclick="addToCart(this)" class="mt-3 w-full bg-green-600 text-white py-2 rounded-lg text-xs font-bold flex items-center justify-center gap-1 hover:bg-green-700 transition">
+                        <i class="fa-solid fa-cart-plus"></i> <span>أضف إلى السلة</span>
+                    </button>
+                </div>
+
+                <!-- سكر سنيدة -->
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex flex-col justify-between text-center product-card" data-id="4" data-name="سكر حبيبات سنيدة ممتاز 2 كيلو" data-price="11.50">
+                    <img src="https://images.unsplash.com/photo-1593113598332-cd288d649433?auto=format&fit=crop&w=400&q=80" alt="سكر سنيدة ناعم" class="w-full h-36 md:h-40 object-cover rounded-lg mb-3">
+                    <div>
+                        <h4 class="product-title text-xs md:text-sm font-bold text-gray-800 h-10 overflow-hidden">سكر حبيبات سنيدة ممتاز 2 كيلو</h4>
+                        <p class="text-green-700 font-extrabold text-base mt-2 bg-green-50 py-1 rounded border border-green-200"><span class="price-val">11.50</span> درهم</p>
+                    </div>
+                    <button onclick="addToCart(this)" class="mt-3 w-full bg-green-600 text-white py-2 rounded-lg text-xs font-bold flex items-center justify-center gap-1 hover:bg-green-700 transition">
+                        <i class="fa-solid fa-cart-plus"></i> <span>أضف إلى السلة</span>
+                    </button>
+                </div>
+
+                <!-- الدقيق الممتاز -->
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex flex-col justify-between text-center product-card" data-id="5" data-name="دقيق فورص ممتاز ميمونة 10 كيلو" data-price="48.00">
+                    <img src="https://images.unsplash.com/photo-1509440159596-0249088772ff?auto=format&fit=crop&w=400&q=80" alt="دقيق قمح فورص حقيقي" class="w-full h-36 md:h-40 object-cover rounded-lg mb-3">
+                    <div>
+                        <h4 class="product-title text-xs md:text-sm font-bold text-gray-800 h-10 overflow-hidden">دقيق فورص ممتاز ميمونة 10 كيلو</h4>
+                        <p class="text-green-700 font-extrabold text-base mt-2 bg-green-50 py-1 rounded border border-green-200"><span class="price-val">48.00</span> درهم</p>
+                    </div>
+                    <button onclick="addToCart(this)" class="mt-3 w-full bg-green-600 text-white py-2 rounded-lg text-xs font-bold flex items-center justify-center gap-1 hover:bg-green-700 transition">
+                        <i class="fa-solid fa-cart-plus"></i> <span>أضف إلى السلة</span>
+                    </button>
+                </div>
+
+                <!-- الأرز الممتاز -->
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex flex-col justify-between text-center product-card" data-id="6" data-name="أرز أبيض كلاسيك كلاصي 1 كيلو" data-price="14.50">
+                    <img src="https://images.unsplash.com/photo-1586201375761-83865001e31c?auto=format&fit=crop&w=400&q=80" alt="أرز أبيض حقيقي" class="w-full h-36 md:h-40 object-cover rounded-lg mb-3">
+                    <div>
+                        <h4 class="product-title text-xs md:text-sm font-bold text-gray-800 h-10 overflow-hidden">أرز أبيض كلاسيك كلاصي 1 كيلو</h4>
+                        <p class="text-green-700 font-extrabold text-base mt-2 bg-green-50 py-1 rounded border border-green-200"><span class="price-val">14.50</span> درهم</p>
+                    </div>
+                    <button onclick="addToCart(this)" class="mt-3 w-full bg-green-600 text-white py-2 rounded-lg text-xs font-bold flex items-center justify-center gap-1 hover:bg-green-700 transition">
+                        <i class="fa-solid fa-cart-plus"></i> <span>أضف إلى السلة</span>
+                    </button>
+                </div>
+
+                <!-- شاي شعرة -->
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex flex-col justify-between text-center product-card" data-id="7" data-name="شاي الكوثر الأخضر ممتاز 250 غرام" data-price="26.00">
+                    <img src="https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&w=400&q=80" alt="شاي أخضر مغربي" class="w-full h-36 md:h-40 object-cover rounded-lg mb-3">
+                    <div>
+                        <h4 class="product-title text-xs md:text-sm font-bold text-gray-800 h-10 overflow-hidden">شاي الكوثر الأخضر ممتاز 250 غرام</h4>
+                        <p class="text-green-700 font-extrabold text-base mt-2 bg-green-50 py-1 rounded border border-green-200"><span class="price-val">26.00</span> درهم</p>
+                    </div>
+                    <button onclick="addToCart(this)" class="mt-3 w-full bg-green-600 text-white py-2 rounded-lg text-xs font-bold flex items-center justify-center gap-1 hover:bg-green-700 transition">
+                        <i class="fa-solid fa-cart-plus"></i> <span>أضف إلى السلة</span>
+                    </button>
+                </div>
+
+                <!-- بن القهوة المطحونة -->
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex flex-col justify-between text-center product-card" data-id="8" data-name="قهوة أسترا مطحونة ممتازة 250 غرام" data-price="21.00">
+                    <img src="https://images.unsplash.com/photo-1514432324607-a09d9b4aefdd?auto=format&fit=crop&w=400&q=80" alt="قهوة مطحونة حقيقية" class="w-full h-36 md:h-40 object-cover rounded-lg mb-3">
+                    <div>
+                        <h4 class="product-title text-xs md:text-sm font-bold text-gray-800 h-10 overflow-hidden">قهوة أسترا مطحونة ممتازة 250 غرام</h4>
+                        <p class="text-green-700 font-extrabold text-base mt-2 bg-green-50 py-1 rounded border border-green-200"><span class="price-val">21.00</span> درهم</p>
+                    </div>
+                    <button onclick="addToCart(this)" class="mt-3 w-full bg-green-600 text-white py-2 rounded-lg text-xs font-bold flex items-center justify-center gap-1 hover:bg-green-700 transition">
+                        <i class="fa-solid fa-cart-plus"></i> <span>أضف إلى السلة</span>
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ================= قسم القطاني والحبوب ================= -->
+        <section id="section-legumes" class="mb-12">
+            <h2 class="text-xl font-black border-r-4 border-green-600 pr-3 mb-6 text-slate-800 flex items-center gap-2">
+                🌾 قسم القطاني والحبوب الطرية
+            </h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+                
+                <!-- العدس -->
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex flex-col justify-between text-center product-card" data-id="9" data-name="عدس بلدي منقى وممتاز 1 كيلو" data-price="16.00">
+                    <img src="https://images.unsplash.com/photo-1536882240095-0379873feb4e?auto=format&fit=crop&w=400&q=80" alt="حبوب عدس حقيقية" class="w-full h-36 md:h-40 object-cover rounded-lg mb-3">
+                    <div>
+                        <h4 class="product-title text-xs md:text-sm font-bold text-gray-800 h-10 overflow-hidden">عدس بلدي منقى وممتاز 1 كيلو</h4>
+                        <p class="text-green-700 font-extrabold text-base mt-2 bg-green-50 py-1 rounded border border-green-200"><span class="price-val">16.00</span> درهم</p>
+                    </div>
+                    <button onclick="addToCart(this)" class="mt-3 w-full bg-green-600 text-white py-2 rounded-lg text-xs font-bold flex items-center justify-center gap-1 hover:bg-green-700 transition">
+                        <i class="fa-solid fa-cart-plus"></i> <span>أضف إلى السلة</span>
+                    </button>
+                </div>
+
+                <!-- الفول -->
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex flex-col justify-between text-center product-card" data-id="10" data-name="فول يابس صغير للمنقوب والبيصارة 1 كيلو" data-price="15.50">
+                    <img src="https://images.unsplash.com/photo-1547058881-aa0edd92aab3?auto=format&fit=crop&w=400&q=80" alt="فول يابس حقيقي" class="w-full h-36 md:h-40 object-cover rounded-lg mb-3">
+                    <div>
+                        <h4 class="product-title text-xs md:text-sm font-bold text-gray-800 h-10 overflow-hidden">فول يابس صغير للمنقوب والبيصارة 1 كيلو</h4>
+                        <p class="text-green-700 font-extrabold text-base mt-2 bg-green-50 py-1 rounded border border-green-200"><span class="price-val">15.50</span> درهم</p>
+                    </div>
+                    <button onclick="addToCart(this)" class="mt-3 w-full bg-green-600 text-white py-2 rounded-lg text-xs font-bold flex items-center justify-center gap-1 hover:bg-green-700 transition">
+                        <i class="fa-solid fa-cart-plus"></i> <span>أضف إلى السلة</span>
+                    </button>
+                </div>
+
+                <!-- الحمص -->
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex flex-col justify-between text-center product-card" data-id="11" data-name="حمص غليظ ممتاز خاص بالحريرة 1 كيلو" data-price="19.00">
+                    <img src="https://images.unsplash.com/photo-1545114134-27926b1f93f0?auto=format&fit=crop&w=400&q=80" alt="حمص مجفف حقيقي" class="w-full h-36 md:h-40 object-cover rounded-lg mb-3">
+                    <div>
+                        <h4 class="product-title text-xs md:text-sm font-bold text-gray-800 h-10 overflow-hidden">حمص غليظ ممتاز خاص بالحريرة 1 كيلو</h4>
+                        <p class="text-green-700 font-extrabold text-base mt-2 bg-green-50 py-1 rounded border border-green-200"><span class="price-val">19.00</span> درهم</p>
+                    </div>
+                    <button onclick="addToCart(this)" class="mt-3 w-full bg-green-600 text-white py-2 rounded-lg text-xs font-bold flex items-center justify-center gap-1 hover:bg-green-700 transition">
+                        <i class="fa-solid fa-cart-plus"></i> <span>أضف إلى السلة</span>
+                    </button>
+                </div>
+
+                <!-- اللوبيا اليايسة -->
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex flex-col justify-between text-center product-card" data-id="12" data-name="فاصوليا بيضاء جافة لوبيا 1 كيلو" data-price="18.00">
+                    <img src="https://images.unsplash.com/photo-1551462147-ff29053bfc14?auto=format&fit=crop&w=400&q=80" alt="لوبيا بيضاء حقيقية" class="w-full h-36 md:h-40 object-cover rounded-lg mb-3">
+                    <div>
+                        <h4 class="product-title text-xs md:text-sm font-bold text-gray-800 h-10 overflow-hidden">فاصوليا بيضاء جافة لوبيا 1 كيلو</h4>
+                        <p class="text-green-700 font-extrabold text-base mt-2 bg-green-50 py-1 rounded border border-green-200"><span class="price-val">18.00</span> درهم</p>
+                    </div>
+                    <button onclick="addToCart(this)" class="mt-3 w-full bg-green-600 text-white py-2 rounded-lg text-xs font-bold flex items-center justify-center gap-1 hover:bg-green-700 transition">
+                        <i class="fa-solid fa-cart-plus"></i> <span>أضف إلى السلة</span>
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ================= قسم المشروبات والمياه ================= -->
+        <section id="section-drinks" class="mb-12">
+            <h2 class="text-xl font-black border-r-4 border-amber-500 pr-3 mb-6 text-slate-800 flex items-center gap-2">
+                🥤 قسم المشروبات والمياه الغازية
+            </h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+                
+                <!-- كوكاكولا -->
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex flex-col justify-between text-center product-card" data-id="13" data-name="مشروب غازي كوكاكولا حجم عائلي 2 لتر" data-price="12.50">
+                    <img src="https://images.unsplash.com/photo-1622483767028-3f66f32aef97?auto=format&fit=crop&w=400&q=80" alt="قنينة كوكاكولا حقيقية" class="w-full h-36 md:h-40 object-cover rounded-lg mb-3">
+                    <div>
+                        <h4 class="product-title text-xs md:text-sm font-bold text-gray-800 h-10 overflow-hidden">مشروب غازي كوكاكولا حجم عائلي 2 لتر</h4>
+                        <p class="text-green-700 font-extrabold text-base mt-2 bg-green-50 py-1 rounded border border-green-200"><span class="price-val">12.50</span> درهم</p>
+                    </div>
+                    <button onclick="addToCart(this)" class="mt-3 w-full bg-green-600 text-white py-2 rounded-lg text-xs font-bold flex items-center justify-center gap-1 hover:bg-green-700 transition">
+                        <i class="fa-solid fa-cart-plus"></i> <span>أضف إلى السلة</span>
+                    </button>
+                </div>
+
+                <!-- هاواي -->
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex flex-col justify-between text-center product-card" data-id="14" data-name="مشروب غازي هاواي استوائي 1.5 لتر" data-price="9.50">
+                    <img src="https://images.unsplash.com/photo-1556881286-fc6915169721?auto=format&fit=crop&w=400&q=80" alt="عصير مشروب غازي أصفر" class="w-full h-36 md:h-40 object-cover rounded-lg mb-3">
+                    <div>
+                        <h4 class="product-title text-xs md:text-sm font-bold text-gray-800 h-10 overflow-hidden">مشروب غازي هاواي استوائي 1.5 لتر</h4>
+                        <p class="text-green-700 font-extrabold text-base mt-2 bg-green-50 py-1 rounded border border-green-200"><span class="price-val">9.50</span> درهم</p>
+                    </div>
+                    <button onclick="addToCart(this)" class="mt-3 w-full bg-green-600 text-white py-2 rounded-lg text-xs font-bold flex items-center justify-center gap-1 hover:bg-green-700 transition">
+                        <i class="fa-solid fa-cart-plus"></i> <span>أضف إلى السلة</span>
+                    </button>
+                </div>
+
+                <!-- مياه معدنية سيدي علي -->
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex flex-col justify-between text-center product-card" data-id="15" data-name="مياه معدنية طبيعية سيدي علي 1.5 لتر" data-price="5.00">
+                    <img src="https://images.unsplash.com/photo-1608885898957-a599fb1698d6?auto=format&fit=crop&w=400&q=80" alt="قنينة مياه حقيقية" class="w-full h-36 md:h-40 object-cover rounded-lg mb-3">
+                    <div>
+                        <h4 class="product-title text-xs md:text-sm font-bold text-gray-800 h-10 overflow-hidden">مياه معدنية طبيعية سيدي علي 1.5 لتر</h4>
+                        <p class="text-green-700 font-extrabold text-base mt-2 bg-green-50 py-1 rounded border border-green-200"><span class="price-val">5.00</span> درهم</p>
+                    </div>
+                    <button onclick="addToCart(this)" class="mt-3 w-full bg-green-600 text-white py-2 rounded-lg text-xs font-bold flex items-center justify-center gap-1 hover:bg-green-700 transition">
+                        <i class="fa-solid fa-cart-plus"></i> <span>أضف إلى السلة</span>
+                    </button>
+                </div>
+
+                <!-- عصير برتقال جودة -->
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex flex-col justify-between text-center product-card" data-id="16" data-name="عصير البرتقال الطبيعي جودة 1 لتر" data-price="15.00">
+                    <img src="https://images.unsplash.com/photo-1613478223719-2ab802602423?auto=format&fit=crop&w=400&q=80" alt="عصير برتقال حقيقي" class="w-full h-36 md:h-40 object-cover rounded-lg mb-3">
+                    <div>
+                        <h4 class="product-title text-xs md:text-sm font-bold text-gray-800 h-10 overflow-hidden">عصير البرتقال الطبيعي جودة 1 لتر</h4>
+                        <p class="text-green-700 font-extrabold text-base mt-2 bg-green-50 py-1 rounded border border-green-200"><span class="price-val">15.00</span> درهم</p>
+                    </div>
+                    <button onclick="addToCart(this)" class="mt-3 w-full bg-green-600 text-white py-2 rounded-lg text-xs font-bold flex items-center justify-center gap-1 hover:bg-green-700 transition">
+                        <i class="fa-solid fa-cart-plus"></i> <span>أضف إلى السلة</span>
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- ================= قسم الحلويات والمقرمشات ================= -->
+        <section id="section-sweets" class="mb-12">
+            <h2 class="text-xl font-black border-r-4 border-green-600 pr-3 mb-6 text-slate-800 flex items-center gap-2">
+                🍫 قسم الحلويات، البسكويت والمقرمشات
+            </h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6">
+                
+                <!-- بسكويت توني وماري -->
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex flex-col justify-between text-center product-card" data-id="17" data-name="علبة بسكويت ماري الكلاسيكي الاقتصادي" data-price="10.00">
+                    <img src="https://images.unsplash.com/photo-1558961363-fa8fdf82db35?auto=format&fit=crop&w=400&q=80" alt="قطع بسكويت حقيقية" class="w-full h-36 md:h-40 object-cover rounded-lg mb-3">
+                    <div>
+                        <h4 class="product-title text-xs md:text-sm font-bold text-gray-800 h-10 overflow-hidden">علبة بسكويت ماري الكلاسيكي الاقتصادي</h4>
+                        <p class="text-green-700 font-extrabold text-base mt-2 bg-green-50 py-1 rounded border border-green-200"><span class="price-val">10.00</span> درهم</p>
+                    </div>
+                    <button onclick="addToCart(this)" class="mt-3 w-full bg-green-600 text-white py-2 rounded-lg text-xs font-bold flex items-center justify-center gap-1 hover:bg-green-700 transition">
+                        <i class="fa-solid fa-cart-plus"></i> <span>أضف إلى السلة</span>
+                    </button>
+                </div>
+
+                <!-- شوكولاتة كيت كات -->
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex flex-col justify-between text-center product-card" data-id="18" data-name="شوكولاتة كيت كات هيد آند شوك 4 أصابع" data-price="5.50">
+                    <img src="https://images.unsplash.com/photo-1511381939415-e44015466834?auto=format&fit=crop&w=400&q=80" alt="لوح شوكولاتة حقيقي" class="w-full h-36 md:h-40 object-cover rounded-lg mb-3">
+                    <div>
+                        <h4 class="product-title text-xs md:text-sm font-bold text-gray-800 h-10 overflow-hidden">شوكولاتة كيت كات هيد آند شوك 4 أصابع</h4>
+                        <p class="text-green-700 font-extrabold text-base mt-2 bg-green-50 py-1 rounded border border-green-200"><span class="price-val">5.50</span> درهم</p>
+                    </div>
+                    <button onclick="addToCart(this)" class="mt-3 w-full bg-green-600 text-white py-2 rounded-lg text-xs font-bold flex items-center justify-center gap-1 hover:bg-green-700 transition">
+                        <i class="fa-solid fa-cart-plus"></i> <span>أضف إلى السلة</span>
+                    </button>
+                </div>
+
+                <!-- شيبس ليز عائلي -->
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex flex-col justify-between text-center product-card" data-id="19" data-name="رقائق بطاطس شيبس ليز حجم كبير" data-price="12.00">
+                    <img src="https://images.unsplash.com/photo-1566478431344-7e41628b57be?auto=format&fit=crop&w=400&q=80" alt="رقائق شيبس بطاطس حقيقية" class="w-full h-36 md:h-40 object-cover rounded-lg mb-3">
+                    <div>
+                        <h4 class="product-title text-xs md:text-sm font-bold text-gray-800 h-10 overflow-hidden">رقائق بطاطس شيبس ليز حجم كبير</h4>
+                        <p class="text-green-700 font-extrabold text-base mt-2 bg-green-50 py-1 rounded border border-green-200"><span class="price-val">12.00</span> درهم</p>
+                    </div>
+                    <button onclick="addToCart(this)" class="mt-3 w-full bg-green-600 text-white py-2 rounded-lg text-xs font-bold flex items-center justify-center gap-1 hover:bg-green-700 transition">
+                        <i class="fa-solid fa-cart-plus"></i> <span>أضف إلى السلة</span>
+                    </button>
+                </div>
+
+                <!-- مربى عيشة برتقال -->
+                <div class="bg-white p-4 rounded-xl shadow-sm border border-gray-100 flex flex-col justify-between text-center product-card" data-id="20" data-name="مربى الفراولة عيشة الفاخر 430 غرام" data-price="14.50">
+                    <img src="https://images.unsplash.com/photo-1601004890684-d8cbf643f5f2?auto=format&fit=crop&w=400&q=80" alt="قنينة مربى حلوة حقيقية" class="w-full h-36 md:h-40 object-cover rounded-lg mb-3">
+                    <div>
+                        <h4 class="product-title text-xs md:text-sm font-bold text-gray-800 h-10 overflow-hidden">مربى الفراولة عيشة الفاخر 430 غرام</h4>
+                        <p class="text-green-700 font-extrabold text-base mt-2 bg-green-50 py-1 rounded border border-green-200"><span class="price-val">14.50</span> درهم</p>
+                    </div>
+                    <button onclick="addToCart(this)" class="mt-3 w-full bg-green-600 text-white py-2 rounded-lg text-xs font-bold flex items-center justify-center gap-1 hover:bg-green-700 transition">
+                        <i class="fa-solid fa-cart-plus"></i> <span>أضف إلى السلة</span>
+                    </button>
+                </div>
+
+            </div>
+        </section>
+
+    </main>
+
+    <!-- بانر سريع للتواصل السريع والطلب عبر الهاتف -->
+    <section class="max-w-7xl mx-auto px-4 mb-12">
+        <div class="bg-amber-400 rounded-2xl p-5 flex flex-col md:flex-row items-center justify-between gap-4 shadow-md">
+            <div class="flex items-center space-x-reverse space-x-3">
+                <div class="text-4xl">🛵</div>
+                <div>
+                    <h4 class="font-black text-slate-800 text-base">خدمة التوصيل السريع للمنزل متوفرة!</h4>
+                    <p class="text-xs text-slate-700 font-bold">اجمع سلتك وأرسلها لنا وسنتكفل بالباقي فوراً.</p>
+                </div>
+            </div>
+            <a href="https://wa.me/212666489506?text=مرحباً%20متجر%20كرتونة،%20أريد%20الطلب%20من%20المحل" target="_blank" class="bg-green-600 text-white px-8 py-3 rounded-xl font-black text-md shadow flex items-center gap-3 hover:bg-green-700 transition w-full md:w-auto justify-center">
+                <i class="fa-brands fa-whatsapp text-2xl"></i> اطلب الآن مباشرة عبر واتساب
+            </a>
+        </div>
+    </section>
+
+    <!-- أسفل الصفحة (الفوتر) -->
+    <footer class="bg-white border-t border-gray-200 py-6">
+        <div class="max-w-7xl mx-auto px-4 text-center text-xs text-gray-500 font-bold">
+            <p>© 2026 ميني ماركت كرتونة - جميع المواد الغذائية مضمونة ومرتبطة بالرقم 212666489506+</p>
+        </div>
+    </footer>
+
+    <!-- ================= النوافذ المنبثقة التفاعلية (الأزرار المفعلة) ================= -->
+
+    <!-- 1. نافذة سلة المشتريات المتطورة والمدققة للزبون -->
+    <div id="cart-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl relative max-h-[85vh] flex flex-col">
+            <button onclick="closeCartModal()" class="absolute top-4 left-4 text-gray-400 hover:text-gray-600 text-xl"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="text-lg font-black border-b pb-3 text-gray-800 flex items-center gap-2">🛒 تفاصيل سلة الزبون الحالية</h3>
+            
+            <div id="cart-items-container" class="overflow-y-auto flex-1 my-4 space-y-3 text-sm pr-1">
+                <p class="text-center text-gray-400 py-8">السلة فارغة حالياً، اختر سلعك من المتجر 📦</p>
+            </div>
+
+            <div class="border-t pt-4">
+                <div class="flex justify-between font-black text-base text-gray-800 mb-4">
+                    <span>المجموع الإجمالي للحساب:</span>
+                    <span id="cart-total-price" class="text-green-700 font-black text-lg">0.00 درهم</span>
+                </div>
+                <button onclick="sendOrderToWhatsapp()" class="w-full bg-green-600 text-white py-3 rounded-xl font-bold flex items-center justify-center gap-2 hover:bg-green-700 transition shadow">
+                    <i class="fa-brands fa-whatsapp text-xl"></i> إرسال قائمة السلع وتأكيد الطلب بالواتساب
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2. نافذة تسجيل الدخول المفعلة للزبناء -->
+    <div id="login-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-xl relative">
+            <button onclick="closeModal('login-modal')" class="absolute top-4 left-4 text-gray-400 hover:text-gray-600 text-xl"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="text-lg font-black mb-4 text-center text-slate-800">🔐 تسجيل دخول الزبناء</h3>
+            <div class="space-y-3">
+                <input type="text" placeholder="رقم الهاتف الخاص بك" class="w-full p-3 border rounded-lg text-sm focus:ring-2 focus:ring-amber-400 outline-none">
+                <input type="password" placeholder="كلمة المرور السرية" class="w-full p-3 border rounded-lg text-sm focus:ring-2 focus:ring-amber-400 outline-none">
+                <button onclick="alert('شكراً لك! لقد تم تسجيل دخولك بنجاح للمتجر.')" class="w-full bg-[#1e293b] text-white py-2.5 rounded-lg font-bold text-sm hover:bg-slate-700 transition">دخول آمن للموقع</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 3. نافذة من نحن المفعلة للمحل -->
+    <div id="about-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-2xl max-w-md w-full p-6 shadow-xl relative">
+            <button onclick="closeModal('about-modal')" class="absolute top-4 left-4 text-gray-400 hover:text-gray-600 text-xl"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="text-lg font-black mb-3 text-green-700">📦 من نحن؟ - كرتونة ميني ماركت</h3>
+            <p class="text-sm leading-relaxed text-gray-600 font-semibold text-justify">
+                مرحباً بكم في **كرتونة ميني ماركت**، متجركم الإلكتروني المتكامل والموثوق لتوفير وتوصيل كل مستلزمات البيوت والمطابخ المغربية على أرض الواقع. نوفر لكم السلع الأساسية من دقيق وزيوت وسكر وقطاني وحلويات بأثمنة السوق المناسبة مع جودة عالية وتوصيل سريع ومباشر لباب الدار.
+            </p>
+        </div>
+    </div>
+
+    <!-- 4. نافذة تواصل معنا المفعلة -->
+    <div id="contact-modal" class="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center hidden p-4">
+        <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-xl relative">
+            <button onclick="closeModal('contact-modal')" class="absolute top-4 left-4 text-gray-400 hover:text-gray-600 text-xl"><i class="fa-solid fa-xmark"></i></button>
+            <h3 class="text-lg font-black mb-4 text-amber-500">📞 معلومات الاتصال بالمحل</h3>
+            <div class="space-y-4 text-sm font-bold text-gray-700">
+                <p class="flex items-center gap-2"><i class="fa-solid fa-phone text-green-600"></i> رقم الواتساب: 212666489506+</p>
+                <p class="flex items-center gap-2"><i class="fa-solid fa-location-dot text-green-600"></i> التوصيل: متوفر لكافة الأحياء المجاورة فوراً</p>
+                <p class="text-xs text-gray-400 font-normal">نحن متواجدون ومستعدون لخدمة طلباتكم على مدار اليوم.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= الجزء البرمجي لعمل الأزرار والبحث الفوري ================= -->
+    <script>
+        let cart = [];
+
+        // 1. خاصية البحث الفوري والذكي عن المنتجات والسلع داخل المحل
+        function searchProducts() {
+            const query = document.getElementById('search-bar').value.toLowerCase().trim();
+            const cards = document.querySelectorAll('.product-card');
+            
+            cards.forEach(card => {
+                const productName = card.getAttribute('data-name').toLowerCase();
+                if (productName.includes(query)) {
+                    card.style.display = 'flex'; // إظهار المنتج المطابق
+                } else {
+                    card.style.display = 'none'; // إخفاء المنتج غير المطابق
+                }
+            });
+        }
+
+        // 2. إضافة المنتجات إلى السلة وحساب الكميات تلقائياً
+        function addToCart(button) {
+            const card = button.closest('.product-card');
+            const id = card.getAttribute('data-id');
+            const name = card.getAttribute('data-name');
+            const price = parseFloat(card.getAttribute('data-price'));
+
+            const existingItem = cart.find(item => item.id === id);
+            if (existingItem) {
+                existingItem.quantity += 1;
+            } else {
+                cart.push({ id, name, price, quantity: 1 });
+            }
+
+            updateCartUI();
+
+            // تأثير حركي تفاعلي على زر الإضافة لتأكيد العملية للزبون
+            const btnText = button.querySelector('span');
+            button.classList.replace('bg-green-600', 'bg-gray-800');
+            btnText.innerText = 'أضيف للسلة ✓';
+            setTimeout(() => {
+                button.classList.replace('bg-gray-800', 'bg-green-600');
+                btnText.innerText = 'أضف إلى السلة';
+            }, 700);
+        }
+
+        // 3. تحديث واجهة سلة الزبون وحساب المجموع بدقة
+        function updateCartUI() {
+            const countElement = document.getElementById('cart-count');
+            const totalItems = cart.reduce((sum, item) => sum + item.quantity, 0);
+            countElement.innerText = totalItems;
+
+            const container = document.getElementById('cart-items-container');
+            const totalElement = document.getElementById('cart-total-price');
+            
+            if (cart.length === 0) {
+                container.innerHTML = '<p class="text-center text-gray-400 py-8">السلة فارغة حالياً، اختر سلعك من المتجر 📦</p>';
+                totalElement.innerText = '0.00 درهم';
+                return;
+            }
+
+            let html = '';
+            let totalPrice = 0;
+
+            cart.forEach(item => {
+                const subTotal = item.price * item.quantity;
+                totalPrice += subTotal;
+                html += `
+                    <div class="flex items-center justify-between bg-gray-50 p-3 rounded-xl border border-gray-200">
+                        <div>
+                            <p class="font-bold text-gray-800">${item.name}</p>
+                            <p class="text-xs text-gray-500">${item.price.toFixed(2)} درهم × ${item.quantity}</p>
+                        </div>
+                        <div class="flex items-center gap-3">
+                            <span class="font-black text-green-700">${subTotal.toFixed(2)} درهم</span>
+                            <button onclick="removeFromCart('${item.id}')" class="text-red-500 hover:text-red-700"><i class="fa-solid fa-trash-can"></i></button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            container.innerHTML = html;
+            totalElement.innerText = totalPrice.toFixed(2) + ' درهم';
+        }
+
+        // 4. حذف السلع من سلة المشتريات
+        function removeFromCart(id) {
+            cart = cart.filter(item => item.id !== id);
+            updateCartUI();
+        }
+
+        // 5. وظائف فتح وإغلاق النوافذ والأزرار العامة
+        function openCartModal() { document.getElementById('cart-modal').classList.remove('hidden'); }
+        function closeCartModal() { document.getElementById('cart-modal').classList.add('hidden'); }
+        function openModal(id) { document.getElementById(id).classList.remove('hidden'); }
+        function closeModal(id) { document.getElementById(id).classList.add('hidden'); }
+
+        // 6. تجميع الفاتورة وإرسالها مفصلة برابط مباشر للواتساب الخاص بك
+        function sendOrderToWhatsapp() {
+            if (cart.length === 0) {
+                alert('السلة فارغة حالياً، يرجى إضافة منتجات أولاً قبل الطلب!');
+                return;
+            }
+
+            let message = '🛒 *طلب شراء سلع جديد من كرتونة ميني ماركت* 🛒\n\n';
+            let total = 0;
+            
+            cart.forEach((item, index) => {
+                const subTotal = item.price * item.quantity;
+                total += subTotal;
+                message += `${index + 1}. *${item.name}*\n    الكمية: ${item.quantity} × السعر: ${item.price.toFixed(2)} درهم\n    المجموع: ${subTotal.toFixed(2)} درهم\n`;
+            });
+
+            message += `\n💰 *الحساب الإجمالي الكلي للفاتورة: ${total.toFixed(2)} درهم المغربي*`;
+            message += '\n\n🚛 المرجو تأكيد تجهيز السلع وتوصيل الطلبية للمنزل وشكراً!';
+
+            window.open(`https://wa.me/212666489506?text=${encodeURIComponent(message)}`, '_blank');
+        }
+    </script>
+</body>
+</html>
